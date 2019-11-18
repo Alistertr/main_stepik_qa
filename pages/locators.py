@@ -3,6 +3,8 @@ from selenium.webdriver.common.by import By
 
 class MainPageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
+    BUTTON_SEE_BASKET = (By.CSS_SELECTOR, ".btn-group > .btn:first-child")
+
 
 
 class LoginPageLocators():
@@ -23,3 +25,8 @@ class ProductPageLocators():
 class BasePageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
     LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
+
+class BasketPageLocators():
+    TEXT_MESSAGE_IS_EMPTY = 'Ваша корзина пуста Продолжить покупки'
+    MESSAGE_BASKET_IS_EMPTY = (By.ID, "content_inner")
+    PRODUCT_IN_BASKET = (By.CSS_SELECTOR, ".basket-items")
