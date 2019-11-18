@@ -1,0 +1,272 @@
+Index: pages/login_page.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pages/login_page.py	(date 1573715836000)
++++ pages/login_page.py	(date 1574058257949)
+@@ -1,5 +1,5 @@
+-from .locators import LoginPageLocators
+ from .base_page import BasePage
++from .locators import LoginPageLocators
+ 
+ 
+ class LoginPage(BasePage):
+Index: test_product_page.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- test_product_page.py	(date 1574058398102)
++++ test_product_page.py	(date 1574058398102)
+@@ -0,0 +1,72 @@
++from time import sleep
++
++import pytest
++
++from .pages.login_page import LoginPage
++from .pages.product_page import ProductPage
++
++
++
++# @pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
++#                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer1",
++#                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer2",
++#                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer3",
++#                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer4",
++#                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer5",
++#                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer6",
++#                                   pytest.param("http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer6", marks=pytest.mark.xfail),
++#                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer8",
++#                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer9"],
++#
++#                          )
++
++
++# def test_guest_can_add_product_to_basket(browser):
++#     # link = f"{link}"
++#     link = "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/"
++#     page = ProductPage(browser, link)
++#     page.open()
++#     page.add_product_to_cart()
++#     page.solve_quiz_and_get_code()
++#     page.correct_product_name_in_message(page.get_product_name())
++#     page.correct_price_in_message(page.get_product_price())
++#     # sleep(5000)
++
++# @pytest.mark.xfail
++# def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
++#     link = "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/"
++#     page = ProductPage(browser, link)
++#     page.open()
++#     page.add_product_to_cart()
++#     page.should_not_be_success_message()
++#
++#
++# def test_guest_cant_see_success_message(browser):
++#     link = "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/"
++#     page = ProductPage(browser, link)
++#     page.open()
++#     page.should_not_be_success_message()
++#
++# @pytest.mark.xfail
++# def test_message_disappeared_after_adding_product_to_basket(browser):
++#     link = "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/"
++#     page = ProductPage(browser, link)
++#     page.open()
++#     page.add_product_to_cart()
++#     page.success_message_is_disappeared()
++
++def test_guest_should_see_login_link_on_product_page(browser):
++    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
++    page = ProductPage(browser, link)
++    page.open()
++    page.should_be_login_link()
++
++
++def test_guest_can_go_to_login_page_from_product_page(browser):
++    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
++    page = ProductPage(browser, link)
++    page.open()
++    page.go_to_login_page()
++    sleep(5)
++    login_page = LoginPage(browser, browser.current_url)
++    login_page.should_be_login_page()
+\ No newline at end of file
+Index: tr.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- tr.py	(date 1574055931695)
++++ tr.py	(date 1574055931695)
+@@ -0,0 +1,13 @@
++from selenium import webdriver
++from selenium.webdriver.common.by import By
++from selenium.webdriver.support.ui import WebDriverWait
++from selenium.webdriver.support import expected_conditions as EC
++
++driver = webdriver.Chrome()
++driver.get("http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/")
++try:
++    element = WebDriverWait(driver, 10).until(
++        EC.presence_of_element_located((By.XPATH, '//div[@class="col-sm-6 product_main"]/h1'))
++    )
++finally:
++    driver.quit()
+\ No newline at end of file
+Index: pages/main_page.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pages/main_page.py	(date 1573715836000)
++++ pages/main_page.py	(date 1574056974731)
+@@ -3,11 +3,6 @@
+ 
+ 
+ class MainPage(BasePage):
+-    def go_to_login_page(self):
+-        login_link = self.browser.find_element(*MainPageLocators.LOGIN_LINK)
+-        login_link.click()
+-
+-
+-    def should_be_login_link(self):
+-        assert self.is_element_present(*MainPageLocators.LOGIN_LINK), "Login link is not presented"
++    def __init__(self, *args, **kwargs):
++        super(MainPage, self).__init__(*args, **kwargs)
+ 
+Index: pages/product_page.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pages/product_page.py	(date 1574055538991)
++++ pages/product_page.py	(date 1574055538991)
+@@ -0,0 +1,29 @@
++from .base_page import BasePage
++from .locators import ProductPageLocators
++
++class ProductPage(BasePage):
++    def add_product_to_cart(self):
++        self.browser.find_element(*ProductPageLocators.BUTTON_ADD_TO_CART).click()
++
++    def get_product_name(self):
++        return self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
++
++    def get_product_price(self):
++        return self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
++
++    def correct_product_name_in_message(self, product_name):
++        assert self.browser.find_element(
++            *ProductPageLocators.PRODUCT_NAME_IN_MESSAGE).text == product_name, "product name incorrect"
++
++
++    def correct_price_in_message(self, product_price):
++        assert self.browser.find_element(
++            *ProductPageLocators.MESSAGE_WITH_PRICE).text == product_price, "product name incorrect"
++
++    def should_not_be_success_message(self):
++        assert self.is_not_element_present(*ProductPageLocators.MESSAGE_ACCESS_ADD_TO_BASKET), \
++            "Success message is presented, but should not be"
++
++    def success_message_is_disappeared(self):
++        assert self.is_disappeared(*ProductPageLocators.MESSAGE_ACCESS_ADD_TO_BASKET), \
++            "Success message is presented, but should not be"
+Index: pages/locators.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pages/locators.py	(date 1573715836000)
++++ pages/locators.py	(date 1574058633167)
+@@ -4,7 +4,22 @@
+ class MainPageLocators():
+     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
+ 
++
+ class LoginPageLocators():
+-    LOGIN_URL = 'http://selenium1py.pythonanywhere.com/accounts/login/'
++    LOGIN_URL = 'http://selenium1py.pythonanywhere.com/en-gb/accounts/login/'
+     FORM_LOGIN = (By.ID, "login_form")
+-    FORM_REGISTOR = (By.ID, "register_form")
+\ No newline at end of file
++    FORM_REGISTOR = (By.ID, "register_form")
++
++
++class ProductPageLocators():
++    PRODUCT_PRICE = (By.CSS_SELECTOR, ".product_main .price_color")
++    BUTTON_ADD_TO_CART = (By.CSS_SELECTOR, ".btn-add-to-basket")
++    PRODUCT_NAME = (By.XPATH, '//div[@class="col-sm-6 product_main"]/h1')
++    PRODUCT_NAME_IN_MESSAGE = (By.XPATH, "(//div[@class='alertinner '])[1]/strong")
++    MESSAGE_WITH_PRICE = (By.XPATH, "(//div[@class='alertinner '])[3]/p/strong")
++    MESSAGE_ACCESS_ADD_TO_BASKET = (By.XPATH, "(//div[@class='alertinner '])[1]")
++
++
++class BasePageLocators():
++    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
++    LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
+\ No newline at end of file
+Index: pages/base_page.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pages/base_page.py	(date 1573715836000)
++++ pages/base_page.py	(date 1574058535076)
+@@ -1,4 +1,9 @@
+-from selenium.common.exceptions import NoSuchElementException
++import math
++from selenium.webdriver.support import expected_conditions as EC
++from selenium.common.exceptions import NoSuchElementException, NoAlertPresentException, TimeoutException
++from selenium.webdriver.support.wait import WebDriverWait
++
++from .locators import BasePageLocators
+ 
+ 
+ class BasePage():
+@@ -15,4 +20,41 @@
+             self.browser.find_element(how, what)
+         except (NoSuchElementException):
+             return False
+-        return True
+\ No newline at end of file
++        return True
++
++    def solve_quiz_and_get_code(self):
++        alert = self.browser.switch_to.alert
++        x = alert.text.split(" ")[2]
++        answer = str(math.log(abs((12 * math.sin(float(x))))))
++        alert.send_keys(answer)
++        alert.accept()
++        try:
++            alert = self.browser.switch_to.alert
++            alert_text = alert.text
++            print(f"Your code: {alert_text}")
++            alert.accept()
++        except NoAlertPresentException:
++            print("No second alert presented")
++
++    def is_not_element_present(self, how, what, timeout=4):
++        try:
++            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
++        except TimeoutException:
++            return True
++
++        return False
++
++    def is_disappeared(self, how, what, timeout=4):
++        try:
++            WebDriverWait(self.browser, timeout, 1, TimeoutException).until_not(EC.presence_of_element_located((how, what)))
++        except TimeoutException:
++            return False
++
++        return True
++
++    def go_to_login_page(self):
++        link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
++        link.click()
++
++    def should_be_login_link(self):
++        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
+\ No newline at end of file
