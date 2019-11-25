@@ -11,6 +11,10 @@ class LoginPageLocators():
     LOGIN_URL = 'http://selenium1py.pythonanywhere.com/en-gb/accounts/login/'
     FORM_LOGIN = (By.ID, "login_form")
     FORM_REGISTOR = (By.ID, "register_form")
+    FIELD_MAIL_FOR_REGISTRATION = (By.NAME, "registration-email")
+    FIELD_PASS_FOR_REGISTRATION = (By.NAME, "registration-password1")
+    FIELD_CONFIRM_PASS = (By.NAME, "registration-password2")
+    BUTTON_SIGNUP = (By.NAME, "registration_submit")
 
 
 class ProductPageLocators():
@@ -25,6 +29,7 @@ class ProductPageLocators():
 class BasePageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
     LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
+    USER_ICON = (By.CSS_SELECTOR, ".icon-user")
 
 class BasketPageLocators():
     TEXT_MESSAGE_IS_EMPTY = 'Ваша корзина пуста Продолжить покупки'
