@@ -8,7 +8,7 @@ class MainPageLocators():
 
 
 class LoginPageLocators():
-    LOGIN_URL = 'http://selenium1py.pythonanywhere.com/en-gb/accounts/login/'
+
     FORM_LOGIN = (By.ID, "login_form")
     FORM_REGISTOR = (By.ID, "register_form")
     FIELD_MAIL_FOR_REGISTRATION = (By.NAME, "registration-email")

@@ -25,31 +25,18 @@ class TestLoginFromMainPage():
         page.open()
         page.should_be_login_link()
 
-# def test_guest_cant_see_product_in_basket_opened_from_main_page(browser):
-#     link = "http://selenium1py.pythonanywhere.com/ru/catalogue/"
-#     page = MainPage(browser, link)
-#     page.open()
-#     page.go_to_basket()
-#     page = BasketPage(browser, browser.current_url)
-#     page.should_be_message_basket_is_empty(BasketPageLocators.TEXT_MESSAGE_IS_EMPTY)
-#     page.should_not_be_product_in_basket()
-#
-#
-#
-#
-# def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
-#     link = "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/"
-#     page = ProductPage(browser, link)
-#     page.open()
-#     page.go_to_basket()
-#     page = BasketPage(browser, browser.current_url)
-#     page.should_be_message_basket_is_empty(BasketPageLocators.TEXT_MESSAGE_IS_EMPTY)
-#     page.should_not_be_product_in_basket()
+def test_guest_cant_see_product_in_basket_opened_from_main_page(browser):
+    link = "http://selenium1py.pythonanywhere.com/ru/catalogue/"
+    page = MainPage(browser, link)
+    page.open()
+    page.go_to_basket()
+    page = BasketPage(browser, browser.current_url)
+    page.should_be_message_basket_is_empty(BasketPageLocators.TEXT_MESSAGE_IS_EMPTY)
+    page.should_not_be_product_in_basket()
 
 
-
-# def test_login(browser):
-#     link = "http://selenium1py.pythonanywhere.com/ru/accounts/login/"
-#     page = LoginPage(browser, link)
-#     page.open()
-#     page.should_be_login_url()
+def test_login(browser):
+    link = "http://selenium1py.pythonanywhere.com/ru/accounts/login/"
+    page = LoginPage(browser, link)
+    page.open()
+    page.should_be_login_url()
