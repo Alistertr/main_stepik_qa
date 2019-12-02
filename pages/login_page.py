@@ -1,7 +1,7 @@
 from .base_page import BasePage
 from .locators import LoginPageLocators
 
-LOGIN_URL = 'http://selenium1py.pythonanywhere.com/ru/accounts/login/'
+LOGIN_URL = 'http://selenium1py.pythonanywhere.com/en-gb/accounts/login/'
 
 
 class LoginPage(BasePage):
